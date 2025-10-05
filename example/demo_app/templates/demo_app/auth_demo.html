@@ -3,36 +3,48 @@
 {% block title %}Auth Middleware Demo - django-htmx-tools{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h2>Authentication Middleware Demo</h2>
-    <p style="margin-bottom: 1.5rem;">This page demonstrates the <strong>htmx_auth_middleware</strong>.</p>
+<div class="max-w-4xl mx-auto">
+    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Authentication Middleware Demo</h2>
+    <p class="mb-6 text-gray-600 dark:text-gray-400">This page demonstrates the <strong class="font-semibold text-gray-900 dark:text-white">htmx_auth_middleware</strong>.</p>
 
-    <div class="alert" style="background: #e7f3ff; border-color: #b3d9ff; color: #004085; margin-bottom: 2rem;">
-        <h4 style="margin-bottom: 0.5rem;">How it works:</h4>
-        <p>When an HTMX request receives a 302 redirect to a login page, the middleware:</p>
-        <ol style="margin-left: 1.5rem; margin-top: 0.5rem;">
-            <li>Converts the 302 response to a 204 (No Content)</li>
-            <li>Adds an <code>HX-Redirect</code> header pointing to the login page</li>
-            <li>Preserves the original URL in the <code>next</code> parameter</li>
-            <li>HTMX follows the redirect and the user can login and return to the original page</li>
-        </ol>
+    <div class="rounded-md bg-blue-50 p-4 mb-8 dark:bg-blue-500/10 dark:outline dark:outline-blue-500/15">
+        <div class="flex">
+            <div class="ml-3">
+                <h4 class="text-sm font-medium text-blue-800 dark:text-blue-100 mb-2">How it works:</h4>
+                <p class="text-sm text-blue-700 dark:text-blue-100/80 mb-2">When an HTMX request receives a 302 redirect to a login page, the middleware:</p>
+                <ol class="list-decimal list-inside space-y-1 text-sm text-blue-700 dark:text-blue-100/80">
+                    <li>Converts the 302 response to a 204 (No Content)</li>
+                    <li>Adds an <code class="px-1 py-0.5 bg-blue-100 dark:bg-blue-900/50 rounded text-xs font-mono">HX-Redirect</code> header pointing to the login page</li>
+                    <li>Preserves the original URL in the <code class="px-1 py-0.5 bg-blue-100 dark:bg-blue-900/50 rounded text-xs font-mono">next</code> parameter</li>
+                    <li>HTMX follows the redirect and the user can login and return to the original page</li>
+                </ol>
+            </div>
+        </div>
     </div>
 
     {% if user.is_authenticated %}
-        <div style="padding: 1rem; background: #d4edda; border: 1px solid #c3e6cb; border-radius: 4px; color: #155724; margin-bottom: 2rem;">
-            <p><strong>✓ You are currently logged in as {{ user.username }}</strong></p>
-            <p style="margin-top: 0.5rem;">Click the button below to load protected content via HTMX (should work):</p>
+        <div class="rounded-md bg-green-50 p-4 mb-8 dark:bg-green-500/10 dark:outline dark:outline-green-500/15">
+            <div class="flex">
+                <div class="ml-3">
+                    <p class="text-sm font-medium text-green-800 dark:text-green-100">✓ You are currently logged in as <strong>{{ user.username }}</strong></p>
+                    <p class="mt-2 text-sm text-green-700 dark:text-green-100/80">Click the button below to load protected content via HTMX (should work):</p>
+                </div>
+            </div>
         </div>
     {% else %}
-        <div style="padding: 1rem; background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 4px; color: #856404; margin-bottom: 2rem;">
-            <p><strong>⚠ You are not logged in</strong></p>
-            <p style="margin-top: 0.5rem;">Click the button below to see the middleware in action. It will redirect you to login, then back here!</p>
+        <div class="rounded-md bg-yellow-50 p-4 mb-8 dark:bg-yellow-500/10 dark:outline dark:outline-yellow-500/15">
+            <div class="flex">
+                <div class="ml-3">
+                    <p class="text-sm font-medium text-yellow-800 dark:text-yellow-100">⚠ You are not logged in</p>
+                    <p class="mt-2 text-sm text-yellow-700 dark:text-yellow-100/80">Click the button below to see the middleware in action. It will redirect you to login, then back here!</p>
+                </div>
+            </div>
         </div>
     {% endif %}
 
-    <div style="margin-bottom: 2rem;">
+    <div class="mb-8">
         <button
-            class="btn"
+            class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:shadow-none dark:hover:bg-indigo-400 dark:focus-visible:outline-indigo-500"
             hx-get="{% url 'protected-content' %}"
             hx-target="#protected-content-area"
             hx-swap="innerHTML">
@@ -40,31 +52,34 @@
         </button>
     </div>
 
-    <div id="protected-content-area" style="min-height: 100px; padding: 1rem; background: #f8f9fa; border-radius: 4px; border: 2px dashed #dee2e6;">
-        <p style="color: #999; text-align: center; font-style: italic;">Protected content will appear here...</p>
+    <div id="protected-content-area" class="min-h-24 p-4 bg-gray-50 dark:bg-gray-800/30 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 mb-8">
+        <p class="text-gray-500 dark:text-gray-400 text-center italic">Protected content will appear here...</p>
     </div>
 
-    <div style="margin-top: 2rem;">
-        <h3>Try it yourself:</h3>
-        <ol style="margin-left: 1.5rem; line-height: 2;">
-            <li>Open your browser's <strong>Network tab</strong> (Developer Tools)</li>
-            <li>If logged in, <a href="{% url 'logout' %}">logout first</a></li>
-            <li>Click the "Load Protected Content" button above</li>
-            <li>Watch the Network tab:
-                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
-                    <li>You'll see a <strong>204 No Content</strong> response</li>
-                    <li>With an <strong>HX-Redirect</strong> header</li>
-                    <li>Followed by HTMX redirecting you to login</li>
-                </ul>
-            </li>
-            <li>After login, you'll be redirected back and can try again</li>
-        </ol>
+    <div class="overflow-hidden rounded-lg bg-white shadow-sm dark:bg-gray-800/50 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10 mb-8">
+        <div class="px-4 py-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Try it yourself:</h3>
+            <ol class="list-decimal list-inside space-y-3 text-gray-700 dark:text-gray-300">
+                <li>Open your browser's <strong class="font-semibold text-gray-900 dark:text-white">Network tab</strong> (Developer Tools)</li>
+                <li>If logged in, <a href="{% url 'logout' %}" class="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">logout first</a></li>
+                <li>Click the "Load Protected Content" button above</li>
+                <li>Watch the Network tab:
+                    <ul class="list-disc list-inside ml-6 mt-2 space-y-1 text-gray-600 dark:text-gray-400">
+                        <li>You'll see a <strong class="font-semibold text-gray-900 dark:text-white">204 No Content</strong> response</li>
+                        <li>With an <strong class="font-semibold text-gray-900 dark:text-white">HX-Redirect</strong> header</li>
+                        <li>Followed by HTMX redirecting you to login</li>
+                    </ul>
+                </li>
+                <li>After login, you'll be redirected back and can try again</li>
+            </ol>
+        </div>
     </div>
 
-    <div style="margin-top: 2rem; padding: 1rem; background: #f8f9fa; border-radius: 4px;">
-        <h4>Code Example:</h4>
-        <div class="code-block">
-# In settings.py
+    <div class="overflow-hidden rounded-lg bg-white shadow-sm dark:bg-gray-800/50 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10">
+        <div class="px-4 py-5 sm:p-6">
+            <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Code Example:</h4>
+            <div class="bg-gray-100 dark:bg-gray-900 p-4 rounded-md mb-4 overflow-x-auto">
+                <pre class="text-sm font-mono text-gray-900 dark:text-gray-100"># In settings.py
 MIDDLEWARE = [
     # ... other middleware
     'django_htmx_tools.middleware.htmx_auth_middleware',
@@ -75,11 +90,12 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def protected_content(request):
-    return render(request, 'partials/protected_content.html')
+    return render(request, 'partials/protected_content.html')</pre>
+            </div>
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+                The middleware automatically handles the HTMX redirect - no additional code needed in your views!
+            </p>
         </div>
-        <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
-            The middleware automatically handles the HTMX redirect - no additional code needed in your views!
-        </p>
     </div>
 </div>
 {% endblock %}

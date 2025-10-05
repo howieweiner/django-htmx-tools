@@ -3,52 +3,61 @@
 {% block title %}Task List - django-htmx-tools Demo{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h2>Task List Demo</h2>
-    <p style="margin-bottom: 1.5rem;">This page demonstrates the core django-htmx-tools features:</p>
+<div class="max-w-4xl mx-auto">
+    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Task List Demo</h2>
+    <p class="mb-6 text-gray-600 dark:text-gray-400">This page demonstrates the core django-htmx-tools features:</p>
 
-    <ul style="margin-bottom: 2rem; line-height: 2;">
-        <li><strong>is_htmx() utility</strong>: Detects HTMX requests to return appropriate templates</li>
-        <li><strong>htmx_vary_middleware</strong>: Adds proper caching headers for HTMX vs full page requests</li>
-        <li><strong>IsHtmxRequestMixin</strong>: Restricts task creation to HTMX requests only</li>
-        <li><strong>htmx_only_request decorator</strong>: Restricts task details to HTMX requests only</li>
+    <ul class="mb-8 space-y-2 list-disc list-inside text-gray-700 dark:text-gray-300">
+        <li><strong class="font-semibold text-gray-900 dark:text-white">is_htmx() utility</strong>: Detects HTMX requests to return appropriate templates</li>
+        <li><strong class="font-semibold text-gray-900 dark:text-white">htmx_vary_middleware</strong>: Adds proper caching headers for HTMX vs full page requests</li>
+        <li><strong class="font-semibold text-gray-900 dark:text-white">IsHtmxRequestMixin</strong>: Restricts task creation to HTMX requests only</li>
+        <li><strong class="font-semibold text-gray-900 dark:text-white">htmx_only_request decorator</strong>: Restricts task details to HTMX requests only</li>
     </ul>
 
-    <div style="margin-bottom: 2rem;">
-        <h3>Add New Task</h3>
-        <form
-            hx-post="{% url 'task-create' %}"
-            hx-target="#task-list"
-            hx-swap="innerHTML"
-            style="display: flex; gap: 1rem; align-items: center;">
-            {% csrf_token %}
-            <input
-                type="text"
-                name="title"
-                placeholder="Enter task title..."
-                style="flex: 1; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem;"
-                required>
-            <button type="submit" class="btn">Add Task</button>
-        </form>
-        <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">
-            💡 Try accessing <a href="{% url 'task-create' %}" target="_blank">/tasks/create/</a> directly - it will fail because IsHtmxRequestMixin only allows HTMX requests.
-        </p>
+    <div class="mb-8">
+        <div class="overflow-hidden rounded-lg bg-white shadow-sm dark:bg-gray-800/50 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10">
+            <div class="px-4 py-5 sm:p-6">
+                <h3 class="text-base font-semibold text-gray-900 dark:text-white mb-4">Add New Task</h3>
+                <form
+                    hx-post="{% url 'task-create' %}"
+                    hx-target="#task-list"
+                    hx-swap="innerHTML"
+                    class="flex gap-4 items-end">
+                    {% csrf_token %}
+                    <div class="flex-1">
+                        <label for="task-title" class="block text-sm/6 font-medium text-gray-900 dark:text-white">Task Title</label>
+                        <div class="mt-2">
+                            <input
+                                id="task-title"
+                                type="text"
+                                name="title"
+                                placeholder="Enter task title..."
+                                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:ring-white/10 dark:placeholder:text-gray-500 dark:focus:ring-indigo-500"
+                                required>
+                        </div>
+                    </div>
+                    <button type="submit" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:shadow-none dark:hover:bg-indigo-400 dark:focus-visible:outline-indigo-500">Add Task</button>
+                </form>
+                <p class="mt-3 text-sm text-gray-600 dark:text-gray-400">
+                    💡 Try accessing <a href="{% url 'task-create' %}" target="_blank" class="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">/tasks/create/</a> directly - it will fail because IsHtmxRequestMixin only allows HTMX requests.
+                </p>
+            </div>
+        </div>
     </div>
 
     <div>
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-            <h3 style="margin: 0;">Tasks</h3>
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Tasks</h3>
             <button
-                class="btn btn-success"
+                class="rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-green-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 dark:bg-green-500 dark:shadow-none dark:hover:bg-green-400 dark:focus-visible:outline-green-500"
                 hx-get="{% url 'task-list' %}"
                 hx-target="#task-list"
-                hx-swap="innerHTML"
-                style="padding: 0.5rem 1rem;">
-                🔄 Refresh List
+                hx-swap="innerHTML">
+                Refresh List
             </button>
         </div>
-        <p style="margin-bottom: 1rem; font-size: 0.9rem; color: #666;">
-            💡 The refresh button demonstrates <strong>htmx_vary_middleware</strong>: Initial page load returns full HTML, but HTMX refresh only gets the partial. Check Network tab to see <code>Vary: HX-Request</code> header!
+        <p class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+            💡 The refresh button demonstrates <strong class="font-semibold text-gray-900 dark:text-white">htmx_vary_middleware</strong>: Initial page load returns full HTML, but HTMX refresh only gets the partial. Check Network tab to see <code class="px-1 py-0.5 bg-gray-100 dark:bg-gray-800 rounded text-xs font-mono">Vary: HX-Request</code> header!
         </p>
         <div id="task-list">
             {% include 'demo_app/partials/task_list_partial.html' %}
@@ -56,19 +65,4 @@
     </div>
 </div>
 
-<style>
-    .task-item {
-        background: #f8f9fa;
-        border: 1px solid #dee2e6;
-        border-radius: 4px;
-        padding: 1rem;
-        margin-bottom: 0.5rem;
-    }
-    .task-item:hover {
-        background: #e9ecef;
-    }
-    .task-content {
-        flex: 1;
-    }
-</style>
 {% endblock %}
