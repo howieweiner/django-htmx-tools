@@ -70,6 +70,9 @@ include = [
     "/README.md",
     "/LICENSE",
 ]
+exclude = [
+    "/example",
+]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/django_htmx_tools"]

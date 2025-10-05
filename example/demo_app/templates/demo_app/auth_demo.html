@@ -1,0 +1,85 @@
+{% extends 'demo_app/base.html' %}
+
+{% block title %}Auth Middleware Demo - django-htmx-tools{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Authentication Middleware Demo</h2>
+    <p style="margin-bottom: 1.5rem;">This page demonstrates the <strong>htmx_auth_middleware</strong>.</p>
+
+    <div class="alert" style="background: #e7f3ff; border-color: #b3d9ff; color: #004085; margin-bottom: 2rem;">
+        <h4 style="margin-bottom: 0.5rem;">How it works:</h4>
+        <p>When an HTMX request receives a 302 redirect to a login page, the middleware:</p>
+        <ol style="margin-left: 1.5rem; margin-top: 0.5rem;">
+            <li>Converts the 302 response to a 204 (No Content)</li>
+            <li>Adds an <code>HX-Redirect</code> header pointing to the login page</li>
+            <li>Preserves the original URL in the <code>next</code> parameter</li>
+            <li>HTMX follows the redirect and the user can login and return to the original page</li>
+        </ol>
+    </div>
+
+    {% if user.is_authenticated %}
+        <div style="padding: 1rem; background: #d4edda; border: 1px solid #c3e6cb; border-radius: 4px; color: #155724; margin-bottom: 2rem;">
+            <p><strong>✓ You are currently logged in as {{ user.username }}</strong></p>
+            <p style="margin-top: 0.5rem;">Click the button below to load protected content via HTMX (should work):</p>
+        </div>
+    {% else %}
+        <div style="padding: 1rem; background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 4px; color: #856404; margin-bottom: 2rem;">
+            <p><strong>⚠ You are not logged in</strong></p>
+            <p style="margin-top: 0.5rem;">Click the button below to see the middleware in action. It will redirect you to login, then back here!</p>
+        </div>
+    {% endif %}
+
+    <div style="margin-bottom: 2rem;">
+        <button
+            class="btn"
+            hx-get="{% url 'protected-content' %}"
+            hx-target="#protected-content-area"
+            hx-swap="innerHTML">
+            🔒 Load Protected Content (via HTMX)
+        </button>
+    </div>
+
+    <div id="protected-content-area" style="min-height: 100px; padding: 1rem; background: #f8f9fa; border-radius: 4px; border: 2px dashed #dee2e6;">
+        <p style="color: #999; text-align: center; font-style: italic;">Protected content will appear here...</p>
+    </div>
+
+    <div style="margin-top: 2rem;">
+        <h3>Try it yourself:</h3>
+        <ol style="margin-left: 1.5rem; line-height: 2;">
+            <li>Open your browser's <strong>Network tab</strong> (Developer Tools)</li>
+            <li>If logged in, <a href="{% url 'logout' %}">logout first</a></li>
+            <li>Click the "Load Protected Content" button above</li>
+            <li>Watch the Network tab:
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li>You'll see a <strong>204 No Content</strong> response</li>
+                    <li>With an <strong>HX-Redirect</strong> header</li>
+                    <li>Followed by HTMX redirecting you to login</li>
+                </ul>
+            </li>
+            <li>After login, you'll be redirected back and can try again</li>
+        </ol>
+    </div>
+
+    <div style="margin-top: 2rem; padding: 1rem; background: #f8f9fa; border-radius: 4px;">
+        <h4>Code Example:</h4>
+        <div class="code-block">
+# In settings.py
+MIDDLEWARE = [
+    # ... other middleware
+    'django_htmx_tools.middleware.htmx_auth_middleware',
+]
+
+# In views.py
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def protected_content(request):
+    return render(request, 'partials/protected_content.html')
+        </div>
+        <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
+            The middleware automatically handles the HTMX redirect - no additional code needed in your views!
+        </p>
+    </div>
+</div>
+{% endblock %}

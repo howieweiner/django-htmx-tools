@@ -1,0 +1,43 @@
+{% extends 'demo_app/base.html' %}
+
+{% block title %}Login - django-htmx-tools Demo{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 400px;">
+    <h2>Login</h2>
+    <p style="margin-bottom: 1.5rem;">Login to access protected content.</p>
+
+    <div class="alert" style="background: #fff3cd; border-color: #ffeaa7; color: #856404;">
+        <strong>Demo Credentials:</strong><br>
+        This is a demo - you'll need to create a superuser first:<br>
+        <code>python manage.py createsuperuser</code>
+    </div>
+
+    <form method="post" style="margin-top: 2rem;">
+        {% csrf_token %}
+        <div style="margin-bottom: 1rem;">
+            <label for="username" style="display: block; margin-bottom: 0.5rem;">Username:</label>
+            <input
+                type="text"
+                name="username"
+                id="username"
+                required
+                style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem;">
+        </div>
+        <div style="margin-bottom: 1.5rem;">
+            <label for="password" style="display: block; margin-bottom: 0.5rem;">Password:</label>
+            <input
+                type="password"
+                name="password"
+                id="password"
+                required
+                style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem;">
+        </div>
+        <button type="submit" class="btn" style="width: 100%;">Login</button>
+    </form>
+
+    <p style="margin-top: 1rem; text-align: center;">
+        <a href="{% url 'index' %}">Back to Home</a>
+    </p>
+</div>
+{% endblock %}

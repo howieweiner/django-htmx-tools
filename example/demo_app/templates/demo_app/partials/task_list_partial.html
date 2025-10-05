@@ -1,0 +1,7 @@
+{% if tasks %}
+    {% for task in tasks %}
+        {% include 'demo_app/partials/task_item.html' %}
+    {% endfor %}
+{% else %}
+    <p style="color: #666; font-style: italic;">No tasks yet. Add one above!</p>
+{% endif %}

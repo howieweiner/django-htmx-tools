@@ -1,0 +1,74 @@
+{% extends 'demo_app/base.html' %}
+
+{% block title %}Task List - django-htmx-tools Demo{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Task List Demo</h2>
+    <p style="margin-bottom: 1.5rem;">This page demonstrates the core django-htmx-tools features:</p>
+
+    <ul style="margin-bottom: 2rem; line-height: 2;">
+        <li><strong>is_htmx() utility</strong>: Detects HTMX requests to return appropriate templates</li>
+        <li><strong>htmx_vary_middleware</strong>: Adds proper caching headers for HTMX vs full page requests</li>
+        <li><strong>IsHtmxRequestMixin</strong>: Restricts task creation to HTMX requests only</li>
+        <li><strong>htmx_only_request decorator</strong>: Restricts task details to HTMX requests only</li>
+    </ul>
+
+    <div style="margin-bottom: 2rem;">
+        <h3>Add New Task</h3>
+        <form
+            hx-post="{% url 'task-create' %}"
+            hx-target="#task-list"
+            hx-swap="innerHTML"
+            style="display: flex; gap: 1rem; align-items: center;">
+            {% csrf_token %}
+            <input
+                type="text"
+                name="title"
+                placeholder="Enter task title..."
+                style="flex: 1; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem;"
+                required>
+            <button type="submit" class="btn">Add Task</button>
+        </form>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">
+            💡 Try accessing <a href="{% url 'task-create' %}" target="_blank">/tasks/create/</a> directly - it will fail because IsHtmxRequestMixin only allows HTMX requests.
+        </p>
+    </div>
+
+    <div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h3 style="margin: 0;">Tasks</h3>
+            <button
+                class="btn btn-success"
+                hx-get="{% url 'task-list' %}"
+                hx-target="#task-list"
+                hx-swap="innerHTML"
+                style="padding: 0.5rem 1rem;">
+                🔄 Refresh List
+            </button>
+        </div>
+        <p style="margin-bottom: 1rem; font-size: 0.9rem; color: #666;">
+            💡 The refresh button demonstrates <strong>htmx_vary_middleware</strong>: Initial page load returns full HTML, but HTMX refresh only gets the partial. Check Network tab to see <code>Vary: HX-Request</code> header!
+        </p>
+        <div id="task-list">
+            {% include 'demo_app/partials/task_list_partial.html' %}
+        </div>
+    </div>
+</div>
+
+<style>
+    .task-item {
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        padding: 1rem;
+        margin-bottom: 0.5rem;
+    }
+    .task-item:hover {
+        background: #e9ecef;
+    }
+    .task-content {
+        flex: 1;
+    }
+</style>
+{% endblock %}

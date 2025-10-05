@@ -1,0 +1,12 @@
+<div class="task-item" id="task-{{ task.id }}">
+    <div class="task-content">
+        <strong
+            style="cursor: pointer;"
+            hx-get="{% url 'task-detail' task.id %}"
+            hx-target="#task-detail-{{ task.id }}"
+            hx-swap="innerHTML">
+            {{ task.title }}
+        </strong>
+        <div id="task-detail-{{ task.id }}" style="margin-top: 0.5rem;"></div>
+    </div>
+</div>

@@ -1,0 +1,74 @@
+{% extends 'demo_app/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Welcome to django-htmx-tools Demo</h2>
+    <p style="margin: 1rem 0;">This demo project showcases the features of the <code>django-htmx-tools</code> library.</p>
+
+    <section style="margin: 2rem 0;">
+        <h3>Features Demonstrated</h3>
+
+        <div style="margin: 1.5rem 0;">
+            <h4>1. IsHtmxRequestMixin</h4>
+            <p>A class-based view mixin that restricts access to HTMX requests only.</p>
+            <div class="code-block">
+from django_htmx_tools.views import IsHtmxRequestMixin
+
+class TaskCreateView(IsHtmxRequestMixin, CreateView):
+    # This view only accepts HTMX requests
+    pass
+            </div>
+            <p><strong>Try it:</strong> <a href="{% url 'task-list' %}">Go to Task List</a> and add a task (HTMX) or try accessing <a href="{% url 'task-create' %}">/tasks/create/</a> directly (will fail).</p>
+        </div>
+
+        <div style="margin: 1.5rem 0;">
+            <h4>2. htmx_only_request Decorator</h4>
+            <p>A function-based view decorator that restricts access to HTMX requests only.</p>
+            <div class="code-block">
+from django_htmx_tools.views.decorators import htmx_only_request
+
+@htmx_only_request
+def task_detail(request, pk):
+    # This view only accepts HTMX requests
+    pass
+            </div>
+            <p><strong>Try it:</strong> Click on a task in the <a href="{% url 'task-list' %}">Task List</a> (HTMX works), or try accessing a task detail URL directly like /tasks/1/ (will fail).</p>
+        </div>
+
+        <div style="margin: 1.5rem 0;">
+            <h4>3. htmx_vary_middleware</h4>
+            <p>Adds proper <code>Vary: HX-Request</code> headers for caching when serving different content for HTMX vs regular requests.</p>
+            <div class="code-block">
+MIDDLEWARE = [
+    # ... other middleware
+    'django_htmx_tools.middleware.htmx_vary_middleware',
+]
+            </div>
+            <p><strong>Try it:</strong> Visit the <a href="{% url 'task-list' %}">Task List</a> and check the response headers. The middleware automatically adds the Vary header.</p>
+        </div>
+
+        <div style="margin: 1.5rem 0;">
+            <h4>4. htmx_auth_middleware</h4>
+            <p>Handles authentication redirects for HTMX requests by converting 302 redirects to login pages into 204 responses with <code>HX-Redirect</code> headers.</p>
+            <div class="code-block">
+MIDDLEWARE = [
+    # ... other middleware
+    'django_htmx_tools.middleware.htmx_auth_middleware',
+]
+            </div>
+            <p><strong>Try it:</strong> Visit the <a href="{% url 'auth-demo' %}">Auth Demo</a> to see the middleware in action. Load protected content via HTMX and watch how authentication redirects are handled seamlessly.</p>
+        </div>
+    </section>
+
+    <section style="margin: 2rem 0;">
+        <h3>Quick Start</h3>
+        <div class="alert">
+            <strong>Explore the demos:</strong>
+            <ul style="margin-top: 0.5rem; margin-left: 1.5rem;">
+                <li><a href="{% url 'task-list' %}">Task List</a> - See mixins, decorators, and middleware in action</li>
+                <li><a href="{% url 'auth-demo' %}">Auth Demo</a> - Test authentication middleware with HTMX</li>
+            </ul>
+        </div>
+    </section>
+</div>
+{% endblock %}

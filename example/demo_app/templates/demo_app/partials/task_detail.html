@@ -1,0 +1,8 @@
+<div style="font-size: 0.9rem; color: #666; padding: 0.5rem; background: #fff; border-left: 3px solid #3498db;">
+    <p><strong>Task ID:</strong> {{ task.id }}</p>
+    <p><strong>Created:</strong> {{ task.created_at|date:"F j, Y, g:i a" }}</p>
+    <p style="margin-top: 0.5rem; font-style: italic;">
+        💡 This detail loaded via <strong>htmx_only_request</strong> decorator. Try accessing
+        <a href="{% url 'task-detail' task.id %}" target="_blank">/tasks/{{ task.id }}/</a> directly - it will fail with 403!
+    </p>
+</div>
