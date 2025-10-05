@@ -1,12 +1,12 @@
-<div class="task-item" id="task-{{ task.id }}">
-    <div class="task-content">
+<div class="bg-gray-50 dark:bg-gray-800/30 border border-gray-200 dark:border-gray-700 rounded-lg p-4 mb-2 hover:bg-gray-100 dark:hover:bg-gray-800/50 transition-colors" id="task-{{ task.id }}">
+    <div class="flex-1">
         <strong
-            style="cursor: pointer;"
+            class="cursor-pointer text-gray-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
             hx-get="{% url 'task-detail' task.id %}"
             hx-target="#task-detail-{{ task.id }}"
             hx-swap="innerHTML">
             {{ task.title }}
         </strong>
-        <div id="task-detail-{{ task.id }}" style="margin-top: 0.5rem;"></div>
+        <div id="task-detail-{{ task.id }}" class="mt-2"></div>
     </div>
 </div>

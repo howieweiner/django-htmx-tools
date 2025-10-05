@@ -1,73 +1,87 @@
 {% extends 'demo_app/base.html' %}
 
 {% block content %}
-<div class="container">
-    <h2>Welcome to django-htmx-tools Demo</h2>
-    <p style="margin: 1rem 0;">This demo project showcases the features of the <code>django-htmx-tools</code> library.</p>
+<div class="max-w-4xl mx-auto">
+    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Welcome to django-htmx-tools Demo</h2>
+    <p class="mb-8 text-gray-600 dark:text-gray-400">This demo project showcases the features of the <code class="px-1 py-0.5 bg-gray-100 dark:bg-gray-800 rounded text-xs font-mono">django-htmx-tools</code> library.</p>
 
-    <section style="margin: 2rem 0;">
-        <h3>Features Demonstrated</h3>
+    <section class="mb-8">
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-6">Features Demonstrated</h3>
 
-        <div style="margin: 1.5rem 0;">
-            <h4>1. IsHtmxRequestMixin</h4>
-            <p>A class-based view mixin that restricts access to HTMX requests only.</p>
-            <div class="code-block">
-from django_htmx_tools.views import IsHtmxRequestMixin
+        <div class="mb-6 overflow-hidden rounded-lg bg-white shadow-sm dark:bg-gray-800/50 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10">
+            <div class="px-4 py-5 sm:p-6">
+                <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">1. IsHtmxRequestMixin</h4>
+                <p class="mb-4 text-gray-600 dark:text-gray-400">A class-based view mixin that restricts access to HTMX requests only.</p>
+                <div class="bg-gray-100 dark:bg-gray-900 p-4 rounded-md mb-4 overflow-x-auto">
+                    <pre class="text-sm font-mono text-gray-900 dark:text-gray-100">from django_htmx_tools.views import IsHtmxRequestMixin
 
 class TaskCreateView(IsHtmxRequestMixin, CreateView):
     # This view only accepts HTMX requests
-    pass
+    pass</pre>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400"><strong class="font-semibold text-gray-900 dark:text-white">Try it:</strong> <a href="{% url 'task-list' %}" class="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">Go to Task List</a> and add a task (HTMX) or try accessing <a href="{% url 'task-create' %}" class="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">/tasks/create/</a> directly (will fail).</p>
             </div>
-            <p><strong>Try it:</strong> <a href="{% url 'task-list' %}">Go to Task List</a> and add a task (HTMX) or try accessing <a href="{% url 'task-create' %}">/tasks/create/</a> directly (will fail).</p>
         </div>
 
-        <div style="margin: 1.5rem 0;">
-            <h4>2. htmx_only_request Decorator</h4>
-            <p>A function-based view decorator that restricts access to HTMX requests only.</p>
-            <div class="code-block">
-from django_htmx_tools.views.decorators import htmx_only_request
+        <div class="mb-6 overflow-hidden rounded-lg bg-white shadow-sm dark:bg-gray-800/50 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10">
+            <div class="px-4 py-5 sm:p-6">
+                <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">2. htmx_only_request Decorator</h4>
+                <p class="mb-4 text-gray-600 dark:text-gray-400">A function-based view decorator that restricts access to HTMX requests only.</p>
+                <div class="bg-gray-100 dark:bg-gray-900 p-4 rounded-md mb-4 overflow-x-auto">
+                    <pre class="text-sm font-mono text-gray-900 dark:text-gray-100">from django_htmx_tools.views.decorators import htmx_only_request
 
 @htmx_only_request
 def task_detail(request, pk):
     # This view only accepts HTMX requests
-    pass
+    pass</pre>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400"><strong class="font-semibold text-gray-900 dark:text-white">Try it:</strong> Click on a task in the <a href="{% url 'task-list' %}" class="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">Task List</a> (HTMX works), or try accessing a task detail URL directly like /tasks/1/ (will fail).</p>
             </div>
-            <p><strong>Try it:</strong> Click on a task in the <a href="{% url 'task-list' %}">Task List</a> (HTMX works), or try accessing a task detail URL directly like /tasks/1/ (will fail).</p>
         </div>
 
-        <div style="margin: 1.5rem 0;">
-            <h4>3. htmx_vary_middleware</h4>
-            <p>Adds proper <code>Vary: HX-Request</code> headers for caching when serving different content for HTMX vs regular requests.</p>
-            <div class="code-block">
-MIDDLEWARE = [
+        <div class="mb-6 overflow-hidden rounded-lg bg-white shadow-sm dark:bg-gray-800/50 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10">
+            <div class="px-4 py-5 sm:p-6">
+                <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">3. htmx_vary_middleware</h4>
+                <p class="mb-4 text-gray-600 dark:text-gray-400">Adds proper <code class="px-1 py-0.5 bg-gray-100 dark:bg-gray-800 rounded text-xs font-mono">Vary: HX-Request</code> headers for caching when serving different content for HTMX vs regular requests.</p>
+                <div class="bg-gray-100 dark:bg-gray-900 p-4 rounded-md mb-4 overflow-x-auto">
+                    <pre class="text-sm font-mono text-gray-900 dark:text-gray-100">MIDDLEWARE = [
     # ... other middleware
     'django_htmx_tools.middleware.htmx_vary_middleware',
-]
+]</pre>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400"><strong class="font-semibold text-gray-900 dark:text-white">Try it:</strong> Visit the <a href="{% url 'task-list' %}" class="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">Task List</a> and check the response headers. The middleware automatically adds the Vary header.</p>
             </div>
-            <p><strong>Try it:</strong> Visit the <a href="{% url 'task-list' %}">Task List</a> and check the response headers. The middleware automatically adds the Vary header.</p>
         </div>
 
-        <div style="margin: 1.5rem 0;">
-            <h4>4. htmx_auth_middleware</h4>
-            <p>Handles authentication redirects for HTMX requests by converting 302 redirects to login pages into 204 responses with <code>HX-Redirect</code> headers.</p>
-            <div class="code-block">
-MIDDLEWARE = [
+        <div class="mb-6 overflow-hidden rounded-lg bg-white shadow-sm dark:bg-gray-800/50 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10">
+            <div class="px-4 py-5 sm:p-6">
+                <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">4. htmx_auth_middleware</h4>
+                <p class="mb-4 text-gray-600 dark:text-gray-400">Handles authentication redirects for HTMX requests by converting 302 redirects to login pages into 204 responses with <code class="px-1 py-0.5 bg-gray-100 dark:bg-gray-800 rounded text-xs font-mono">HX-Redirect</code> headers.</p>
+                <div class="bg-gray-100 dark:bg-gray-900 p-4 rounded-md mb-4 overflow-x-auto">
+                    <pre class="text-sm font-mono text-gray-900 dark:text-gray-100">MIDDLEWARE = [
     # ... other middleware
     'django_htmx_tools.middleware.htmx_auth_middleware',
-]
+]</pre>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400"><strong class="font-semibold text-gray-900 dark:text-white">Try it:</strong> Visit the <a href="{% url 'auth-demo' %}" class="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">Auth Demo</a> to see the middleware in action. Load protected content via HTMX and watch how authentication redirects are handled seamlessly.</p>
             </div>
-            <p><strong>Try it:</strong> Visit the <a href="{% url 'auth-demo' %}">Auth Demo</a> to see the middleware in action. Load protected content via HTMX and watch how authentication redirects are handled seamlessly.</p>
         </div>
     </section>
 
-    <section style="margin: 2rem 0;">
-        <h3>Quick Start</h3>
-        <div class="alert">
-            <strong>Explore the demos:</strong>
-            <ul style="margin-top: 0.5rem; margin-left: 1.5rem;">
-                <li><a href="{% url 'task-list' %}">Task List</a> - See mixins, decorators, and middleware in action</li>
-                <li><a href="{% url 'auth-demo' %}">Auth Demo</a> - Test authentication middleware with HTMX</li>
-            </ul>
+    <section class="mb-8">
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Quick Start</h3>
+        <div class="rounded-md bg-blue-50 p-4 dark:bg-blue-500/10 dark:outline dark:outline-blue-500/15">
+            <div class="flex">
+                <div class="ml-3">
+                    <h3 class="text-sm font-medium text-blue-800 dark:text-blue-100">Explore the demos:</h3>
+                    <div class="mt-2 text-sm text-blue-700 dark:text-blue-100/80">
+                        <ul class="list-disc list-inside space-y-1">
+                            <li><a href="{% url 'task-list' %}" class="underline hover:text-blue-900 dark:hover:text-blue-50">Task List</a> - See mixins, decorators, and middleware in action</li>
+                            <li><a href="{% url 'auth-demo' %}" class="underline hover:text-blue-900 dark:hover:text-blue-50">Auth Demo</a> - Test authentication middleware with HTMX</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 </div>

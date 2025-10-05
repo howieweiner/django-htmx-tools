@@ -3,41 +3,55 @@
 {% block title %}Login - django-htmx-tools Demo{% endblock %}
 
 {% block content %}
-<div class="container" style="max-width: 400px;">
-    <h2>Login</h2>
-    <p style="margin-bottom: 1.5rem;">Login to access protected content.</p>
+<div class="max-w-md mx-auto">
+    <div class="overflow-hidden rounded-lg bg-white shadow-sm dark:bg-gray-800/50 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10">
+        <div class="px-4 py-5 sm:p-6">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Login</h2>
+            <p class="mb-6 text-gray-600 dark:text-gray-400">Login to access protected content.</p>
 
-    <div class="alert" style="background: #fff3cd; border-color: #ffeaa7; color: #856404;">
-        <strong>Demo Credentials:</strong><br>
-        This is a demo - you'll need to create a superuser first:<br>
-        <code>python manage.py createsuperuser</code>
+            <div class="rounded-md bg-blue-50 p-4 mb-6 dark:bg-blue-500/10 dark:outline dark:outline-blue-500/15">
+                <div class="flex">
+                    <div class="">
+                        <h3 class="text-sm font-medium text-blue-800 dark:text-blue-100">Demo Credentials</h3>
+                        <div class="mt-2 text-sm text-blue-700 dark:text-blue-100/80">
+                            <p>This is a demo - you'll need to create a superuser first</p>
+                            <code class="block mt-1 px-2 py-1 bg-blue-100 dark:bg-blue-900/50 rounded text-xs font-mono">python manage.py createsuperuser</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-4">
+                    <label for="username" class="block text-sm/6 font-medium text-gray-900 dark:text-white">Username</label>
+                    <div class="mt-2">
+                        <input
+                            type="text"
+                            name="username"
+                            id="username"
+                            required
+                            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:ring-white/10 dark:placeholder:text-gray-500 dark:focus:ring-indigo-500">
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label for="password" class="block text-sm/6 font-medium text-gray-900 dark:text-white">Password</label>
+                    <div class="mt-2">
+                        <input
+                            type="password"
+                            name="password"
+                            id="password"
+                            required
+                            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:ring-white/10 dark:placeholder:text-gray-500 dark:focus:ring-indigo-500">
+                    </div>
+                </div>
+                <button type="submit" class="w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:shadow-none dark:hover:bg-indigo-400 dark:focus-visible:outline-indigo-500">Login</button>
+            </form>
+
+            <p class="mt-4 text-center text-sm text-gray-600 dark:text-gray-400">
+                <a href="{% url 'index' %}" class="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">Back to Home</a>
+            </p>
+        </div>
     </div>
-
-    <form method="post" style="margin-top: 2rem;">
-        {% csrf_token %}
-        <div style="margin-bottom: 1rem;">
-            <label for="username" style="display: block; margin-bottom: 0.5rem;">Username:</label>
-            <input
-                type="text"
-                name="username"
-                id="username"
-                required
-                style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem;">
-        </div>
-        <div style="margin-bottom: 1.5rem;">
-            <label for="password" style="display: block; margin-bottom: 0.5rem;">Password:</label>
-            <input
-                type="password"
-                name="password"
-                id="password"
-                required
-                style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem;">
-        </div>
-        <button type="submit" class="btn" style="width: 100%;">Login</button>
-    </form>
-
-    <p style="margin-top: 1rem; text-align: center;">
-        <a href="{% url 'index' %}">Back to Home</a>
-    </p>
 </div>
 {% endblock %}
