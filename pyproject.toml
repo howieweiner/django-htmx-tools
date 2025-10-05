@@ -134,6 +134,8 @@ plugins = ["mypy_django_plugin.main"]
 django_settings_module = "tests.settings"
 
 [tool.pytest.ini_options]
+pythonpath = "."
+testpaths = ["tests"]
 DJANGO_SETTINGS_MODULE = "tests.settings"
 python_files = ["test_*.py", "*_test.py"]
 addopts = "--cov=django_htmx_tools --cov-report=term-missing --cov-report=html --strict-markers"

@@ -9,3 +9,8 @@ This project uses uv for Python environments
   source .venv/bin/activate
   uv pip install -e ".[dev]"
 ```
+
+## To run tests
+```bash
+uv run pytest
+```
