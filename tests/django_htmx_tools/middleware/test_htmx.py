@@ -65,7 +65,9 @@ class TestHtmxAuthMiddleware:
         response = middleware(htmx_request_with_referer)
 
         assert response.status_code == 204
-        assert response.headers["HX-Redirect"] == "/accounts/login/?next=/previous-page/"
+        assert (
+            response.headers["HX-Redirect"] == "/accounts/login/?next=/previous-page/"
+        )
 
     def test_does_not_modify_non_htmx_302_redirect(self, non_htmx_request):
         """Should not modify 302 redirects for non-HTMX requests"""

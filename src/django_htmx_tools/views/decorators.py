@@ -11,6 +11,7 @@ def htmx_only_request(view_func):
     :param view_func:
     :return:
     """
+
     @wraps(view_func)
     def wrapper(request, *args, **kwargs):
         if not is_htmx(request):

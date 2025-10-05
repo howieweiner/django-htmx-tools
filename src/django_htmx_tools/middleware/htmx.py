@@ -30,11 +30,7 @@ def htmx_auth_middleware(get_response):
         # with 'next' query param set to where the request originated. Also change
         # response status code to 204 (no content) so that htmx will obey the
         # HX-Redirect header value.
-        if (
-            is_htmx(request)
-            and response.status_code == 302
-            and "login" in response.url
-        ):
+        if is_htmx(request) and response.status_code == 302 and "login" in response.url:
             ref_header = request.headers.get("Referer", "")
             if ref_header:
                 referer = urlparse(ref_header)
@@ -70,7 +66,7 @@ def htmx_vary_middleware(get_response):
     def middleware(request):
         response = get_response(request)
         if is_htmx(request):
-            patch_vary_headers(response, ["HX-Request"])
+            patch_vary_headers(response, ("HX-Request",))
         return response
 
     return middleware

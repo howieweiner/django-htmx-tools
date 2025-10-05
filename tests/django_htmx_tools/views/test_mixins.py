@@ -1,9 +1,10 @@
 import pytest
 from django.http import HttpResponse
-from django.views.generic import TemplateView
 from django.test import RequestFactory
+from django.views.generic import TemplateView
 
 from django_htmx_tools.views.mixins import IsHtmxRequestMixin
+
 
 def setup_view_for_testing(view_class, request, **view_kwargs):
     """
@@ -15,10 +16,12 @@ def setup_view_for_testing(view_class, request, **view_kwargs):
     view.request = request
     return view
 
+
 @pytest.fixture
 def request_factory():
     """Create a RequestFactory instance"""
     return RequestFactory()
+
 
 @pytest.fixture
 def htmx_request(request_factory):
@@ -37,6 +40,7 @@ def non_htmx_request(request_factory):
     request = request_factory.post("/test/")
     return request
 
+
 def test_allows_htmx_request(htmx_request):
     """Should allow HTMX requests"""
 
@@ -52,6 +56,7 @@ def test_allows_htmx_request(htmx_request):
     assert response.status_code == 200
     assert response.content == b"Success"
 
+
 def test_prevents_non_htmx_request(non_htmx_request):
     """Should prevent non-HTMX requests with 403"""
 
@@ -65,4 +70,4 @@ def test_prevents_non_htmx_request(non_htmx_request):
     response = view.dispatch(non_htmx_request)
 
     assert response.status_code == 403
-    assert b"Request must be made with HTMX" in response.content
+    assert b"Request must be made with HTMX" in response.content  # type: ignore[attr-defined]

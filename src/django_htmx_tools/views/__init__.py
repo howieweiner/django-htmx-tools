@@ -1,3 +1,3 @@
 from .mixins import IsHtmxRequestMixin
 
-__all__ = ['IsHtmxRequestMixin']
+__all__ = ["IsHtmxRequestMixin"]

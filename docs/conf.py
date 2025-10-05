@@ -1,4 +1,5 @@
 """Sphinx configuration."""
+
 import os
 import sys
 
@@ -40,5 +41,8 @@ napoleon_include_init_with_doc = True
 # Intersphinx configuration
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),
-    "django": ("https://docs.djangoproject.com/en/stable/", "https://docs.djangoproject.com/en/stable/_objects/"),
+    "django": (
+        "https://docs.djangoproject.com/en/stable/",
+        "https://docs.djangoproject.com/en/stable/_objects/",
+    ),
 }
