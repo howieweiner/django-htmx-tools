@@ -16,6 +16,13 @@ Features
 - **htmx_vary_middleware** - Proper caching headers for HTMX requests
 - **htmx_auth_middleware** - Authentication redirect handling for HTMX
 
+References
+------------
+
+- [HTMX Caching](https://htmx.org/docs/#caching)
+- [How to Handle Django Login Redirects with HTMX](https://www.caktusgroup.com/blog/2022/11/11/how-handle-django-login-redirects-htmx/)
+
+
 Requirements
 ------------
 

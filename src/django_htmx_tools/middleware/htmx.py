@@ -54,7 +54,7 @@ def htmx_vary_middleware(get_response):
     Required if the server renders the full HTML when the HX-Request header is missing/ false,
     but renders a fragment of that HTML when HX-Request is true.
 
-    Reference: https://htmx.org/docs/#vary-header
+    Reference: https://htmx.org/docs/#caching
 
     Args:
         get_response: The next middleware or view in the chain.
