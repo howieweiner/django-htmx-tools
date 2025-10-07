@@ -177,7 +177,7 @@ exclude_lines = [
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "0.1.0"
+version = "1.0.0"
 tag_format = "v$version"
 version_files = [
     "src/django_htmx_tools/__init__.py:__version__",
