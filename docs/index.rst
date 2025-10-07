@@ -19,8 +19,8 @@ Features
 References
 ------------
 
-- [HTMX Caching](https://htmx.org/docs/#caching)
-- [How to Handle Django Login Redirects with HTMX](https://www.caktusgroup.com/blog/2022/11/11/how-handle-django-login-redirects-htmx/)
+- `HTMX Caching <https://htmx.org/docs/#caching>`_
+- `How to Handle Django Login Redirects with HTMX <https://www.caktusgroup.com/blog/2022/11/11/how-handle-django-login-redirects-htmx/>`_
 
 
 Requirements
