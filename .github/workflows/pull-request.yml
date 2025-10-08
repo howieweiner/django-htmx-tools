@@ -34,10 +34,11 @@ jobs:
     - name: Set up Python ${{ matrix.python-version }}
       run: uv python install ${{ matrix.python-version }}
 
-    - name: Install dependencies
+    - name: Create virtual environment and install dependencies
       run: |
-        uv pip install --system django~=${{ matrix.django-version }}.0
-        uv pip install --system -e ".[test]"
+        uv venv
+        uv pip install django~=${{ matrix.django-version }}.0
+        uv pip install -e ".[test]"
 
     - name: Run tests
       run: |
@@ -63,9 +64,10 @@ jobs:
     - name: Set up Python
       run: uv python install 3.12
 
-    - name: Install dependencies
+    - name: Create virtual environment and install dependencies
       run: |
-        uv pip install --system ruff mypy django-stubs
+        uv venv
+        uv pip install ruff mypy django-stubs
 
     - name: Run ruff check
       run: |

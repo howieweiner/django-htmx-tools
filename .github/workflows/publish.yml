@@ -36,9 +36,10 @@ jobs:
     - name: Set up Python
       run: uv python install 3.12
 
-    - name: Install dependencies
+    - name: Create virtual environment and install dependencies
       run: |
-        uv pip install --system -e ".[docs]"
+        uv venv
+        uv pip install -e ".[docs]"
 
     - name: Build docs
       run: |
