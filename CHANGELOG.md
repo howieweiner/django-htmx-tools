@@ -1,3 +1,9 @@
+## v1.0.1 (2025-10-08)
+
+### Fix
+
+- creates virtual env in Github action workflows
+
 ## v1.0.0 (2025-10-07)
 
 ### Features
