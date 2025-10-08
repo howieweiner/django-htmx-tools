@@ -1,5 +1,11 @@
 # django-htmx-tools
 
+[![PyPI version](https://badge.fury.io/py/django-htmx-tools.svg)](https://badge.fury.io/py/django-htmx-tools)
+[![Python versions](https://img.shields.io/pypi/pyversions/django-htmx-tools.svg)](https://pypi.org/project/django-htmx-tools/)
+[![Django versions](https://img.shields.io/pypi/djversions/django-htmx-tools.svg)](https://pypi.org/project/django-htmx-tools/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Documentation Status](https://readthedocs.org/projects/django-htmx-tools/badge/?version=latest)](https://django-htmx-tools.readthedocs.io/en/latest/?badge=latest)
+
 An assortment of Django mixins and middleware for working with HTMX.
 
 django-htmx-tools provides a collection of utilities to make it easier to build
